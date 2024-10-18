@@ -1,5 +1,8 @@
 package spring.core.practice.components;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Laptop {
 
 	private String name;
