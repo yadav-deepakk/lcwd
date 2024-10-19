@@ -4,9 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import com.batch.lcwd.components.Engine;
-import com.batch.lcwd.components.WindShield;
-import com.batch.lcwd.controller.WebPageController;
+import com.batch.lcwd.components.Employee;
+
 
 @SpringBootApplication
 public class SpringCoreConceptsApplication {
@@ -33,20 +32,21 @@ public class SpringCoreConceptsApplication {
 //			System.out.println("Same bean is given by context everytime.");
 //		}
 
-		WindShield w1 = ctx.getBean(WindShield.class);
-		WindShield w2 = ctx.getBean(WindShield.class);
-		WindShield w3 = ctx.getBean(WindShield.class);
-
-		System.out.println(w1);
-		System.out.println(w2);
-		System.out.println(w3);
-
-		if (w1 == w2 && w2 == w3) {
-			System.out.println("same bean is given by context everytime.");
-		} else {
-			System.out.println("bean is given by context is different than previous.");
-		}
-
+//		WindShield w1 = ctx.getBean(WindShield.class);
+//		WindShield w2 = ctx.getBean(WindShield.class);
+//		WindShield w3 = ctx.getBean(WindShield.class);
+//
+//		System.out.println(w1);
+//		System.out.println(w2);
+//		System.out.println(w3);
+//
+//		if (w1 == w2 && w2 == w3) {
+//			System.out.println("same bean is given by context everytime.");
+//		} else {
+//			System.out.println("bean is given by context is different than previous.");
+//		}
+		
+		Employee emp = ctx.getBean(Employee.class); 
 		ctx.close();
 
 	}
