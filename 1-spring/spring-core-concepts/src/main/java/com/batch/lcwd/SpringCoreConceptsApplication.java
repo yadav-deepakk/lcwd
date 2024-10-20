@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import com.batch.lcwd.components.Employee;
+import com.batch.lcwd.controller.WebPageController;
 
 
 @SpringBootApplication
@@ -35,21 +36,24 @@ public class SpringCoreConceptsApplication {
 //		WindShield w1 = ctx.getBean(WindShield.class);
 //		WindShield w2 = ctx.getBean(WindShield.class);
 //		WindShield w3 = ctx.getBean(WindShield.class);
-//
+
 //		System.out.println(w1);
 //		System.out.println(w2);
 //		System.out.println(w3);
-//
+
 //		if (w1 == w2 && w2 == w3) {
 //			System.out.println("same bean is given by context everytime.");
 //		} else {
 //			System.out.println("bean is given by context is different than previous.");
 //		}
-		
-		Employee emp = ctx.getBean(Employee.class); 
-		emp.markIn();
-		emp.doWork();
-		emp.markOut();
+
+//		Employee emp = ctx.getBean(Employee.class); 
+//		emp.markIn();
+//		emp.doWork();
+//		emp.markOut();
+
+		WebPageController controller = ctx.getBean(WebPageController.class); 
+		controller.login(); 
 		ctx.close();
 
 	}
