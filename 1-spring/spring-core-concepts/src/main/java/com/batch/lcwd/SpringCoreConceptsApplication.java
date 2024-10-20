@@ -47,6 +47,9 @@ public class SpringCoreConceptsApplication {
 //		}
 		
 		Employee emp = ctx.getBean(Employee.class); 
+		emp.markIn();
+		emp.doWork();
+		emp.markOut();
 		ctx.close();
 
 	}
