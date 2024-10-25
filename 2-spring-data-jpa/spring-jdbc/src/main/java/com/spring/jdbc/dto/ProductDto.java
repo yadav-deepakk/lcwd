@@ -1,30 +1,23 @@
-package com.spring.jdbc.model;
+package com.spring.jdbc.dto;
 
-public class Product {
+public class ProductDto {
 	private int id;
 	private String name;
 	private String description;
 	private float price;
-	private int categoryId; 
+	private String productCategory;
 
-	// Constructors
-	public Product() {
+	// Constructor
+	public ProductDto() {
 		super();
 	}
-	public Product(String name, String description, float price, int categoryId) {
+	public ProductDto(int id, String name, String description, float price, String productCategory) {
 		super();
+		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.price = price;
-		this.categoryId = categoryId;
-	}
-	public Product(int id, String name, String description, float price, int categoryId) {
-		super();
-		this.id = id; 
-		this.name = name;
-		this.description = description;
-		this.price = price;
-		this.categoryId = categoryId;
+		this.productCategory = productCategory;
 	}
 
 	// Getter/Setter
@@ -52,16 +45,18 @@ public class Product {
 	public void setPrice(float price) {
 		this.price = price;
 	}
-	public int getCategoryId() {
-		return categoryId;
+	public String getProductCategory() {
+		return productCategory;
 	}
-	public void setCategoryId(int categoryId) {
-		this.categoryId = categoryId;
+	public void setProductCategory(String productCategory) {
+		this.productCategory = productCategory;
 	}
 
-	// toString
+	// ToStringFunction
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", price=" + price + "]";
+		return "ProductDto [id=" + id + ", name=" + name + ", price=" + price + ", productCategory=" + productCategory
+				+ "]";
 	}
+
 }

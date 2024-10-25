@@ -2,6 +2,7 @@ package com.spring.jdbc.dao;
 
 import java.util.List;
 
+import com.spring.jdbc.dto.ProductDto;
 import com.spring.jdbc.model.Product;
 
 public interface ProductDao {
@@ -9,7 +10,7 @@ public interface ProductDao {
 	boolean save(Product product); 
 	
 	// R - Read
-	List<Product> getAllProducts(); 
+	List<ProductDto> getAllProducts(); 
 	Product getProductById(int id); 
 	List<Product> searchProductsByName(String keyword); 
 	List<Product> searchProductsByDescription(String keyword); 

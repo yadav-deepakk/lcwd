@@ -2,12 +2,14 @@ package com.spring.jdbc;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.List;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import com.spring.jdbc.dao.ProductDao;
+import com.spring.jdbc.dto.ProductDto;
 import com.spring.jdbc.model.Product;
 
 @SpringBootApplication
@@ -55,9 +57,9 @@ public class SpringJdbcApplication {
 			System.out.println("6. Search product by name");
 			System.out.println("7. Exit");
 			System.out.println("Enter your choice (1 - 7) : ");
-			
+
 			try {
-				
+
 				try {
 					choice = reader.readLine();
 					ch = Integer.parseInt(choice);
@@ -69,15 +71,13 @@ public class SpringJdbcApplication {
 				switch (ch) {
 				case 1:
 					System.out.println("=========== Add a product ==========");
-					System.out.println("Enter id : ");
-					id = Integer.parseInt(reader.readLine());
 					System.out.println("Enter product name : ");
-					name = reader.readLine(); 
+					name = reader.readLine();
 					System.out.println("Enter product description : ");
 					desc = reader.readLine();
 					System.out.println("Enter product price : ");
 					price = Float.parseFloat(reader.readLine());
-					product = new Product(id, name, desc, price);
+					product = new Product(name, desc, price, 101);
 					productDao.save(product);
 					break;
 
@@ -91,7 +91,7 @@ public class SpringJdbcApplication {
 					desc = reader.readLine();
 					System.out.println("Enter product price : ");
 					price = Float.parseFloat(reader.readLine());
-					product = new Product(id, name, desc, price);
+					product = new Product(id, name, desc, price, 101);
 					productDao.update(product);
 					break;
 
@@ -109,12 +109,11 @@ public class SpringJdbcApplication {
 
 				case 4:
 					System.out.println("=========== Display all products ==========");
-					productList = productDao.getAllProducts();
-					if (productList.size() > 0)
-						for (Product fetchedProduct : productList)
-							System.out.println(fetchedProduct);
+					List<ProductDto> productDtoList = productDao.getAllProducts();
+					if (productDtoList.size() > 0)
+						productDtoList.forEach((fetchedProductDto) -> System.out.println(fetchedProductDto));
 					else
-						System.out.println("Product List is Empty!");
+						System.out.println("ProductDto List is Empty!");
 					break;
 
 				case 5:
