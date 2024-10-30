@@ -20,4 +20,6 @@ public interface ProductService {
 	// D - Delete
 	boolean delete(Product product);
 	boolean deleteById(String id);
+
+	void transactCategoryWithProduct();
 }

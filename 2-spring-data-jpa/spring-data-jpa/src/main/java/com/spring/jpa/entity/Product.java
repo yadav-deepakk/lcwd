@@ -1,13 +1,12 @@
 package com.spring.jpa.entity;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.ManyToOne;
 import org.hibernate.annotations.UuidGenerator;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 
 @Entity
 public class Product {
@@ -20,10 +19,9 @@ public class Product {
 	private double price;
 	private boolean isLive;
 
-	@ManyToMany
-	private List<Category> productCategory = new ArrayList<>();
+	@ManyToOne
+	private Category productCategory;
 
-	// Constructor
 	public Product() {
 		super();
 	}
@@ -47,10 +45,10 @@ public class Product {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public List<Category> getProductCategory() {
+	public Category getProductCategory() {
 		return productCategory;
 	}
-	public void setProductCategory(List<Category> productCategory) {
+	public void setProductCategory(Category productCategory) {
 		this.productCategory = productCategory;
 	}
 	public String getDescription() {
@@ -72,7 +70,6 @@ public class Product {
 		this.isLive = isLive;
 	}
 
-	// toString
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", title=" + title + ", price=" + price + "]";

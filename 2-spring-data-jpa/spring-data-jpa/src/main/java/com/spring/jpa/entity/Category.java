@@ -3,11 +3,7 @@ package com.spring.jpa.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 
 @Entity
 public class Category {
@@ -17,7 +13,7 @@ public class Category {
 	private String title;
 	private String description;
 
-	@ManyToMany(mappedBy = "productCategory")
+	@OneToMany(mappedBy = "productCategory")
 	private List<Product> productList = new ArrayList<>();
 
 	// Constructor
