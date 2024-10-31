@@ -3,9 +3,11 @@ package com.spring.jpa.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.spring.jpa.entity.listener.CategoryListener;
 import jakarta.persistence.*;
 
 @Entity
+@EntityListeners(CategoryListener.class)
 public class Category {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

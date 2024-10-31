@@ -1,6 +1,8 @@
 package com.spring.jpa;
 
+import com.spring.jpa.entity.Category;
 import com.spring.jpa.entity.Product;
+import com.spring.jpa.repository.CategoryRepository;
 import com.spring.jpa.repository.ProductRepo;
 import com.spring.jpa.service.ProductService;
 import org.junit.jupiter.api.Test;
@@ -16,6 +18,9 @@ class SpringDataJpaApplicationTests {
 //	private ProductRepo productRepo;
 
 	@Autowired
+	CategoryRepository categoryRepo;
+
+	@Autowired
 	private ProductService productService;
 
 	@Test
@@ -26,8 +31,10 @@ class SpringDataJpaApplicationTests {
 //		List<Product> productsWithProKeyword = productRepo.searchByKeywordInTitle("Samsung M31");
 //		List<Product> productsWithProKeyword = productRepo.getProductByKeywordInCategoryTitle("Smart Phones");
 //		productsWithProKeyword.forEach(System.out::println);
+//		productService.transactCategoryWithProduct();
 
-		productService.transactCategoryWithProduct();
+		Category category = new Category("Cloths", "clothing items");
+		categoryRepo.save(category);
 
 	}
 }
