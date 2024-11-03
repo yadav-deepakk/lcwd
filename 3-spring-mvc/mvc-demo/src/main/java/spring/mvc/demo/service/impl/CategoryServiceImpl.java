@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import spring.mvc.demo.entities.Category;
 import spring.mvc.demo.repo.CategoryRepo;
@@ -21,6 +22,17 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public Category save(Category category) {
 		return categoryRepo.save(category);
+	}
+
+	@Override
+	public boolean uploadImage(MultipartFile file) {
+		boolean isSuccess = false;
+		/* ========================
+		 * code to upload image. 
+		 * ======================== */
+		System.out.println("Uploaded file : " + file.getOriginalFilename());
+		isSuccess = true;
+		return isSuccess;
 	}
 
 	@Override

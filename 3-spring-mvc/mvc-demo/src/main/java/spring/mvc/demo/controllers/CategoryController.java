@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import spring.mvc.demo.entities.Category;
 import spring.mvc.demo.service.CategoryService;
@@ -30,6 +32,12 @@ public class CategoryController {
 		return ResponseEntity.ok(categoryService.save(category));
 	}
 
+	@PostMapping("/image")
+	public ResponseEntity<Boolean> uploadImage(@RequestParam("file") MultipartFile imgFile) {
+		System.out.println("Category image upload.");
+		return ResponseEntity.ok(categoryService.uploadImage(imgFile));
+	}
+
 	@GetMapping
 	public ResponseEntity<List<Category>> getAllCategories() {
 		return ResponseEntity.ok(categoryService.getAllCategories());
@@ -44,7 +52,7 @@ public class CategoryController {
 	public ResponseEntity<Category> updateCategory(@RequestBody Category category) {
 		return ResponseEntity.ok(categoryService.update(category));
 	}
-	
+
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Boolean> deleteCategory(@PathVariable Integer id) {
 		return ResponseEntity.ok(categoryService.deleteById(id));

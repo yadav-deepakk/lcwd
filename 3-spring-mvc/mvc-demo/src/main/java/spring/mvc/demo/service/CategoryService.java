@@ -3,6 +3,8 @@ package spring.mvc.demo.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import spring.mvc.demo.entities.Category;
 
 public interface CategoryService {
@@ -18,5 +20,7 @@ public interface CategoryService {
 	
 	// D - Delete
 	boolean deleteById(Integer id);
-	boolean delete(Category category); 
+	boolean delete(Category category);
+
+	boolean uploadImage(MultipartFile file); 
 }
