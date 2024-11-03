@@ -2,8 +2,11 @@ package spring.mvc.demo.controllers;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import spring.mvc.demo.entities.Category;
+import spring.mvc.demo.exceptions.ResourceNotFoundException;
 import spring.mvc.demo.service.CategoryService;
 
 @RestController
@@ -44,8 +48,8 @@ public class CategoryController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Category> getCategoryById(@PathVariable Integer id) {
-		return ResponseEntity.ok(categoryService.getById(id).get());
+	public ResponseEntity<Category> getCategoryById(@PathVariable Integer id) throws ResourceNotFoundException {
+		return ResponseEntity.ok(categoryService.getById(id));
 	}
 
 	@PutMapping
@@ -57,5 +61,10 @@ public class CategoryController {
 	public ResponseEntity<Boolean> deleteCategory(@PathVariable Integer id) {
 		return ResponseEntity.ok(categoryService.deleteById(id));
 	}
+
+//	@ExceptionHandler(RuntimeException.class)
+//	public ResponseEntity<String> handleException(RuntimeException ex) {
+//		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occured : " + ex.getMessage());
+//	}
 
 }

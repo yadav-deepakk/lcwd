@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import spring.mvc.demo.entities.Category;
 import spring.mvc.demo.entities.Product;
+import spring.mvc.demo.exceptions.ResourceNotFoundException;
 import spring.mvc.demo.service.ProductService;
 import org.springframework.web.bind.annotation.PutMapping;
 
@@ -38,12 +39,12 @@ public class ProductController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Product> getAllProducts(@PathVariable Long id) {
-		return ResponseEntity.ok(productService.getById(id).get());
+	public ResponseEntity<Product> getProductById(@PathVariable Long id) throws ResourceNotFoundException {
+		return ResponseEntity.ok(productService.getById(id));
 	}
 
 	@GetMapping("/category")
-	public ResponseEntity<List<Product>> getAllProducts(@RequestParam("id") Integer categoryId) {
+	public ResponseEntity<List<Product>> getAllProductsByCategoryId(@RequestParam("id") Integer categoryId) {
 		Category category = new Category();
 		category.setId(categoryId);
 		return ResponseEntity.ok(productService.getProductsByCategory(category));

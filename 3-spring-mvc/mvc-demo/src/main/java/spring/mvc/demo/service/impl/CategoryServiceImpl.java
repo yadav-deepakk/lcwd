@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import spring.mvc.demo.entities.Category;
+import spring.mvc.demo.exceptions.ResourceNotFoundException;
 import spring.mvc.demo.repo.CategoryRepo;
 import spring.mvc.demo.service.CategoryService;
 
@@ -27,17 +28,20 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public boolean uploadImage(MultipartFile file) {
 		boolean isSuccess = false;
-		/* ========================
-		 * code to upload image. 
-		 * ======================== */
+		// *** code to upload image ***
 		System.out.println("Uploaded file : " + file.getOriginalFilename());
 		isSuccess = true;
 		return isSuccess;
 	}
 
 	@Override
-	public Optional<Category> getById(Integer id) {
-		return categoryRepo.findById(id);
+	public Category getById(Integer id) throws ResourceNotFoundException {
+		try {
+			return categoryRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("No Such Category!"));
+		} catch (ResourceNotFoundException e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	@Override
@@ -53,13 +57,13 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public boolean deleteById(Integer id) {
 		categoryRepo.deleteById(id);
-		return this.getById(id).isEmpty();
+		return categoryRepo.findById(id).isEmpty();
 	}
 
 	@Override
 	public boolean delete(Category category) {
 		categoryRepo.delete(category);
-		return this.getById(category.getId()).isEmpty();
+		return categoryRepo.findById(category.getId()).isEmpty();
 	}
 
 }

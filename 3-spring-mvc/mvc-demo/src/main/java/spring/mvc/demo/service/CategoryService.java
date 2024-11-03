@@ -6,13 +6,14 @@ import java.util.Optional;
 import org.springframework.web.multipart.MultipartFile;
 
 import spring.mvc.demo.entities.Category;
+import spring.mvc.demo.exceptions.ResourceNotFoundException;
 
 public interface CategoryService {
 	// C - Create
 	Category save(Category category); 
 	
 	// R - Read
-	Optional<Category> getById(Integer id); 
+	Category getById(Integer id) throws ResourceNotFoundException; 
 	List<Category> getAllCategories(); 
 	
 	// U - Update

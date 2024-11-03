@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import spring.mvc.demo.entities.Category;
 import spring.mvc.demo.entities.Product;
+import spring.mvc.demo.exceptions.ResourceNotFoundException;
 import spring.mvc.demo.repo.ProductRepo;
 import spring.mvc.demo.service.ProductService;
 
@@ -35,8 +36,13 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Optional<Product> getById(Long id) {
-		return productRepo.findById(id);
+	public Product getById(Long id) throws ResourceNotFoundException {
+		try {
+			return productRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("No Such Product."));
+		} catch (ResourceNotFoundException e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	@Override
@@ -47,13 +53,13 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public boolean deleteById(Long id) {
 		productRepo.deleteById(id);
-		return this.getById(id).isEmpty();
+		return productRepo.findById(id).isEmpty();
 	}
 
 	@Override
 	public boolean delete(Product product) {
 		productRepo.delete(product);
-		return this.getById(product.getId()).isEmpty();
+		return productRepo.findById(product.getId()).isEmpty();
 	}
 
 }
