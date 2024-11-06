@@ -1,14 +1,10 @@
-package com.elearn.app.entities;
+package com.elearn.app.dto;
 
 import java.sql.Date;
 
-import org.hibernate.annotations.UuidGenerator;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,18 +14,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
-public class Video {
-
-	@Id
-	@UuidGenerator
+public class VideoDto {
 	private String id;
 	private String title;
 	private String filePath;  
 	private Date createdAt;
     private String contentType;
-
-	@ManyToOne
-	private Course course;
-
 }

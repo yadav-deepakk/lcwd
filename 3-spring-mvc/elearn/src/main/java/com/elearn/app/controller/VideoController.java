@@ -1,7 +1,9 @@
 package com.elearn.app.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,39 +15,49 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.elearn.app.service.VideoService;
+import com.elearn.app.dto.VideoDto;
 import com.elearn.app.entities.Video;
 
 @RestController
 @RequestMapping("/video")
 public class VideoController {
-	
+
+	private final ModelMapper modelMapper;
 	private final VideoService videoService;
 
-	public VideoController(VideoService videoService) {
+	public VideoController(ModelMapper modelMapper, VideoService videoService) {
+		this.modelMapper = modelMapper;
 		this.videoService = videoService;
 	}
 
 	@PostMapping
-	public ResponseEntity<Video> saveVideo(@RequestBody Video video) {
-		return ResponseEntity.ok(videoService.saveVideo(video));
+	public ResponseEntity<VideoDto> saveVideo(@RequestBody Video video) {
+		Video savedVid = videoService.saveVideo(video);
+		VideoDto vid = modelMapper.map(savedVid, VideoDto.class);
+		return ResponseEntity.ok(vid);
 	}
 
 	@GetMapping
-	public ResponseEntity<List<Video>> getAllVideos() {
-		return ResponseEntity.ok(videoService.getAllVideos());
+	public ResponseEntity<List<VideoDto>> getAllVideos() {
+		List<Video> videoList = videoService.getAllVideos();
+		List<VideoDto> videoDtoList = videoList.stream().map(vid -> modelMapper.map(vid, VideoDto.class))
+				.collect(Collectors.toList());
+		return ResponseEntity.ok(videoDtoList);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Video> getVideoById(@RequestParam("id") String videoId) throws Exception {
-		return ResponseEntity.ok(videoService.getVideoById(videoId));
+	public ResponseEntity<VideoDto> getVideoById(@RequestParam("id") String videoId) throws Exception {
+		Video vid = videoService.getVideoById(videoId); 
+		return ResponseEntity.ok(modelMapper.map(vid, VideoDto.class));
 	}
 
 	@PutMapping
-	public ResponseEntity<Video> updateVideo(@RequestBody Video video) {
-		return ResponseEntity.ok(videoService.updateVideo(video));
+	public ResponseEntity<VideoDto> updateVideo(@RequestBody Video video) {
+		Video vid = videoService.updateVideo(video); 
+		return ResponseEntity.ok(modelMapper.map(vid, VideoDto.class));
 	}
 
-	@DeleteMapping("{id")
+	@DeleteMapping("{id}")
 	public ResponseEntity<Boolean> updateVideo(@RequestParam("id") String videoId) {
 		return ResponseEntity.ok(videoService.deleteVideoById(videoId));
 	}

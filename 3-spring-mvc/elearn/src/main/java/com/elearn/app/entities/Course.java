@@ -43,7 +43,6 @@ public class Course {
 	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
 	private Set<Video> videoSet = new LinkedHashSet<>();
 
-	@JsonIgnore
 	@Builder.Default
 	@ManyToMany(mappedBy = "courseSet")
 	private Set<Category> categorySet = new LinkedHashSet<>();

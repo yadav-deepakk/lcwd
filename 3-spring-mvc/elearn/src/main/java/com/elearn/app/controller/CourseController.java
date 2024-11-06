@@ -16,7 +16,7 @@ import com.elearn.app.entities.Course;
 import com.elearn.app.service.CourseService;
 
 @RestController
-@RequestMapping("/course")
+@RequestMapping("/api/v1/courses")
 public class CourseController {
 
 	private final CourseService courseService;
