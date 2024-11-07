@@ -19,7 +19,7 @@ import com.elearn.app.dto.VideoDto;
 import com.elearn.app.entities.Video;
 
 @RestController
-@RequestMapping("/video")
+@RequestMapping("/api/v1/videos")
 public class VideoController {
 
 	private final ModelMapper modelMapper;

@@ -1,22 +1,21 @@
 package com.elearn.app.service;
 
-import java.util.List;
-
-import com.elearn.app.entities.Category;
+import com.elearn.app.dto.CategoryDto;
+import com.elearn.app.dto.PageResponse;
+import com.elearn.app.exception.ResourceNotFoundException;
 
 public interface CategoryService {
 	// C - Create
-	Category saveCategory(Category category); 
-	
+	CategoryDto saveCategory(CategoryDto categoryDto);
+
 	// R - Read
-	List<Category> getAllCategories(); 
-	Category getCategoryById(String id) throws Exception; 
-	
+	PageResponse<CategoryDto> getCategoryList(int page, int size, String sortBy);
+	CategoryDto getCategoryById(String id) throws ResourceNotFoundException, Exception;
+
 	// U - Update
-	Category updateCategory(Category category); 
-	
+	CategoryDto updateCategory(String categoryId, CategoryDto categoryDto) throws ResourceNotFoundException, Exception;
+
 	// D - Delete
-	boolean deleteCategoryById(String id); 
-	boolean deleteCategory(Category category); 
+	void deleteCategoryById(String id) throws ResourceNotFoundException, Exception;
 
 }

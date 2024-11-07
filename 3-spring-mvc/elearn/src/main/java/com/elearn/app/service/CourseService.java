@@ -1,22 +1,22 @@
 package com.elearn.app.service;
 
-import java.util.List;
+import com.elearn.app.dto.CourseDto;
+import com.elearn.app.exception.ResourceNotFoundException;
 
-import com.elearn.app.entities.Course;
+import java.util.List;
 
 public interface CourseService {
 
-	// C - Create 
-	Course saveCourse(Course course); 
-	
+	// C - Create
+	CourseDto saveCourse(CourseDto courseDto);
+
 	// R - Read
-	List<Course> getAllCourses(); 
-	Course getCourseById(String id) throws Exception; 
-	
+	List<CourseDto> getAllCourses(int page, int size, String sortBy);
+	CourseDto getCourseById(String id) throws ResourceNotFoundException, Exception;
+
 	// U - Update
-	Course updateCourse(Course course); 
-	
+	CourseDto updateCourse(CourseDto course) throws ResourceNotFoundException, Exception;
+
 	// D - Delete
-	boolean deleteCourseById(String id); 
-	boolean deleteCourse(Course course); 
+	void deleteCourseById(String id) throws ResourceNotFoundException, Exception;
 }

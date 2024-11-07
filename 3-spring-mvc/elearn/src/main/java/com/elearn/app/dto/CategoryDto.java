@@ -1,5 +1,7 @@
 package com.elearn.app.dto;
 
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,4 +15,6 @@ public class CategoryDto {
 	private String id;
 	private String title;
 	private String descr;
+	private Date createdAt; 
+
 }

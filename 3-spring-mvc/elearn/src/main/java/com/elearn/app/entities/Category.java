@@ -1,6 +1,7 @@
 package com.elearn.app.entities;
 
 import java.util.Set;
+import java.util.Date;
 import java.util.LinkedHashSet;
 
 import org.hibernate.annotations.UuidGenerator;
@@ -29,7 +30,8 @@ public class Category {
 	private String id;
 	private String title;
 	private String descr;
-
+	private Date createdAt; 
+	
 	@ManyToMany
 	@Builder.Default
 	@JoinTable(name = "category_course_map", joinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"))
