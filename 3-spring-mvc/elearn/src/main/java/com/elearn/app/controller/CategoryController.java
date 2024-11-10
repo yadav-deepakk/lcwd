@@ -16,6 +16,9 @@ import com.elearn.app.dto.CustomMessage;
 import com.elearn.app.dto.PageResponse;
 import com.elearn.app.exception.ResourceNotFoundException;
 import com.elearn.app.service.CategoryService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
@@ -29,7 +32,12 @@ public class CategoryController {
 	}
 
 	@PostMapping
-	public ResponseEntity<CategoryDto> saveCategory(@RequestBody CategoryDto categoryDto) {
+	public ResponseEntity<?> saveCategory(@RequestBody @Valid CategoryDto categoryDto) {
+		
+//		if(bindingResult.hasErrors()) {
+//			return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult.getAllErrors());
+//		}
+		
 		CategoryDto savedCategoryDto = categoryService.saveCategory(categoryDto);
 		return ResponseEntity.ok(savedCategoryDto);
 	}
@@ -38,8 +46,9 @@ public class CategoryController {
 	public ResponseEntity<PageResponse<CategoryDto>> getCategoryList(
 			@RequestParam(name = "page", defaultValue = AppConstants.CATEGORY_DEFAULT_PAGE_NO) int pageNumber,
 			@RequestParam(name = "size", defaultValue = AppConstants.CATEGORY_DEFAULT_PAGE_SIZE) int pageSize,
-			@RequestParam(name = "sort", defaultValue = AppConstants.CATEGORY_DEFAULT_SORT_BY) String sortBy) {
-		PageResponse<CategoryDto> categoryDtoList = categoryService.getCategoryList(pageNumber, pageSize, sortBy);
+			@RequestParam(name = "sort", defaultValue = AppConstants.CATEGORY_DEFAULT_SORT_BY) String sortBy,
+			@RequestParam(name = "dir", defaultValue = AppConstants.CATEGORY_DEFAULT_SORT_BY) String sortDirection) {
+		PageResponse<CategoryDto> categoryDtoList = categoryService.getCategoryList(pageNumber, pageSize, sortBy, sortDirection);
 		return ResponseEntity.ok(categoryDtoList);
 	}
 

@@ -15,7 +15,7 @@ import lombok.Setter;
 @Builder
 public class PageResponse<T> {
 	private int pageNumber;
-	private int PageSize;
+	private int pageSize;
 	private long totalElements;
 	private int totalPages;
 	private boolean last;

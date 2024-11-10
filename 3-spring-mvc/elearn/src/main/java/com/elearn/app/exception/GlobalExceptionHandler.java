@@ -1,8 +1,13 @@
 package com.elearn.app.exception;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.elearn.app.dto.CustomMessage;
@@ -11,14 +16,20 @@ import com.elearn.app.dto.CustomMessage;
 public class GlobalExceptionHandler {
 
 	@ExceptionHandler(ResourceNotFoundException.class)
-	@ResponseStatus(code = HttpStatus.NOT_FOUND)
-	public CustomMessage handleNotFoundException(ResourceNotFoundException ex) {
-		return CustomMessage.builder().message("Not Found").details(ex.getMessage()).build();
+	public ResponseEntity<CustomMessage> handleNotFoundException(ResourceNotFoundException ex) {
+		CustomMessage message = CustomMessage.builder().message("NOT FOUND").details(ex.getMessage()).build();
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message); 
 	}
 
-	@ExceptionHandler(Exception.class)
-	@ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
-	public CustomMessage handleException(Exception ex) {
-		return CustomMessage.builder().message("Internal Server Error").details(ex.getMessage()).build();
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<Map<String, String>> handleNotFoundException(MethodArgumentNotValidException ex) {
+		Map<String, String> errorMap = new HashMap<>();
+		ex.getBindingResult().getAllErrors().forEach(error -> {
+			String fieldName = ((FieldError) error).getField();
+			String errorMessage = error.getDefaultMessage();
+			errorMap.put(fieldName, errorMessage);
+		});
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMap);
 	}
+
 }

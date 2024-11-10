@@ -1,5 +1,6 @@
 package com.elearn.app.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -29,17 +30,19 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public CategoryDto saveCategory(CategoryDto categoryDto) {
 		Category category = modelMapper.map(categoryDto, Category.class);
+		category.setCreatedAt(new Date());
 		Category savedCategory = categoryRepo.save(category);
 		return modelMapper.map(savedCategory, CategoryDto.class);
 	}
 
 	@Override
-	public PageResponse<CategoryDto> getCategoryList(int page, int size, String sortBy) {
-		Page<Category> pageOfCategories = categoryRepo.findAll(PageRequest.of(page, size, Sort.by(sortBy)));
+	public PageResponse<CategoryDto> getCategoryList(int page, int size, String sortBy, String dir) {
+		Sort sort = dir.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+		Page<Category> pageOfCategories = categoryRepo.findAll(PageRequest.of(page, size, sort));
 		List<CategoryDto> categoryDtoList = pageOfCategories.getContent().stream()
 				.map(c -> modelMapper.map(c, CategoryDto.class)).toList();
 		PageResponse<CategoryDto> response = PageResponse.<CategoryDto>builder()
-				.pageNumber(pageOfCategories.getNumber()).PageSize(pageOfCategories.getSize())
+				.pageNumber(pageOfCategories.getNumber()).pageSize(pageOfCategories.getSize())
 				.totalElements(pageOfCategories.getTotalElements()).totalPages(pageOfCategories.getTotalPages())
 				.last(pageOfCategories.isLast()).content(categoryDtoList).build();
 		return response;

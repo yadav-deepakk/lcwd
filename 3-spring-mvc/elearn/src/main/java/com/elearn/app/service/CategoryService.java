@@ -9,7 +9,7 @@ public interface CategoryService {
 	CategoryDto saveCategory(CategoryDto categoryDto);
 
 	// R - Read
-	PageResponse<CategoryDto> getCategoryList(int page, int size, String sortBy);
+	PageResponse<CategoryDto> getCategoryList(int page, int size, String sortBy, String dir);
 	CategoryDto getCategoryById(String id) throws ResourceNotFoundException, Exception;
 
 	// U - Update
