@@ -2,9 +2,9 @@ package com.elearn.app.dto;
 
 import java.sql.Date;
 
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,8 +16,9 @@ import lombok.Setter;
 @Builder
 public class VideoDto {
 	private String id;
+	@Size(min=2, max=100, message="Title can be between 2 to 100 characters only.")
 	private String title;
 	private String filePath;  
-	private Date createdAt;
+	private Date uploadedAt;
     private String contentType;
 }

@@ -1,12 +1,10 @@
 package com.elearn.app.entities;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.hibernate.annotations.UuidGenerator;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -36,7 +34,7 @@ public class Course {
 	private double discount;
 	private String shortDescr;
 	private String longDescr;
-	private String live;
+	private boolean live;
 	private Date createdAt;
 
 	@Builder.Default

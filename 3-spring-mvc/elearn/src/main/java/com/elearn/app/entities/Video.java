@@ -1,6 +1,6 @@
 package com.elearn.app.entities;
 
-import java.sql.Date;
+import java.util.Date;
 
 import org.hibernate.annotations.UuidGenerator;
 
@@ -26,7 +26,7 @@ public class Video {
 	private String id;
 	private String title;
 	private String filePath;  
-	private Date createdAt;
+	private Date uploadedAt;
     private String contentType;
 
 	@ManyToOne

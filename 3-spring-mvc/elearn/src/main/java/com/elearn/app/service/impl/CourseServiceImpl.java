@@ -1,12 +1,16 @@
 package com.elearn.app.service.impl;
 
 import com.elearn.app.dto.CourseDto;
+import com.elearn.app.dto.PageResponse;
 import com.elearn.app.entities.Course;
 
+import java.util.Date;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -28,14 +32,36 @@ public class CourseServiceImpl implements CourseService {
 	@Override
 	public CourseDto saveCourse(CourseDto courseDto) {
 		Course course = modelMapper.map(courseDto, Course.class);
+		course.setCreatedAt(new Date());
 		Course savedCourse = courseRepo.save(course);
 		return modelMapper.map(savedCourse, CourseDto.class);
 	}
 
 	@Override
-	public List<CourseDto> getAllCourses(int page, int size, String sortBy) {
-		List<Course> courseList = courseRepo.findAll(PageRequest.of(page, size, Sort.by(sortBy))).getContent();
-		return courseList.stream().map(course -> modelMapper.map(course, CourseDto.class)).toList();
+	public PageResponse<CourseDto> getAllCourses(int page, int size, String sortBy, String sortDir) {
+		Sort sort = sortDir.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+		Page<Course> coursePage = courseRepo.findAll(PageRequest.of(page, size, sort));
+		List<Course> courseList = coursePage.getContent();
+		PageResponse<CourseDto> pageResponse = PageResponse.<CourseDto>builder().pageSize(coursePage.getSize())
+				.pageNumber(coursePage.getNumber()).totalElements(coursePage.getTotalElements())
+				.totalPages(coursePage.getTotalPages())
+				.last(coursePage.isLast())
+				.content(courseList.stream().map(course -> modelMapper.map(course, CourseDto.class)).toList()).build();
+		return pageResponse;
+	}
+
+	@Override
+	public PageResponse<CourseDto> getSearchedCourses(String keyword, Pageable pageable) {
+		Page<Course> searchedCoursePage = courseRepo.findByTitleContainingOrShortDescrContaining(keyword, keyword,
+				pageable);
+		List<Course> courseList = searchedCoursePage.getContent();
+		PageResponse<CourseDto> pageResponse = PageResponse.<CourseDto>builder().pageSize(searchedCoursePage.getSize())
+				.pageNumber(searchedCoursePage.getNumber()).totalElements(searchedCoursePage.getTotalElements())
+				.totalPages(searchedCoursePage.getTotalPages())
+				.last(searchedCoursePage.isLast())
+				.content(courseList.stream().map(course -> modelMapper.map(course, CourseDto.class)).toList()).build();
+		return pageResponse;
+
 	}
 
 	@Override
@@ -46,8 +72,8 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
-	public CourseDto updateCourse(CourseDto courseDto) throws ResourceNotFoundException, Exception {
-		Course course = courseRepo.findById(courseDto.getId())
+	public CourseDto updateCourse(String id, CourseDto courseDto) throws ResourceNotFoundException, Exception {
+		Course course = courseRepo.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("No Such Course Found to update!"));
 
 		course.setTitle(courseDto.getTitle());
@@ -56,8 +82,7 @@ public class CourseServiceImpl implements CourseService {
 		course.setLongDescr(courseDto.getLongDescr());
 		course.setPrice(courseDto.getPrice());
 		course.setDiscount(courseDto.getDiscount());
-		course.setLive(courseDto.getLive());
-		course.setCreatedAt(courseDto.getCreatedAt());
+		course.setLive(courseDto.isLive());
 
 		Course updatedCourse = courseRepo.save(course);
 

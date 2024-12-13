@@ -1,21 +1,23 @@
 package com.elearn.app.service;
 
-import java.util.List;
+import org.springframework.data.domain.Pageable;
 
-import com.elearn.app.entities.Video;
+import com.elearn.app.dto.PageResponse;
+import com.elearn.app.dto.VideoDto;
+import com.elearn.app.exception.ResourceNotFoundException;
 
 public interface VideoService {
 	// C - Create
-	Video saveVideo(Video video);
+	VideoDto saveVideo(VideoDto videoDto);
 
 	// R - Read
-	List<Video> getAllVideos();
-	Video getVideoById(String id) throws Exception;
+	PageResponse<VideoDto> getAllVideos(Pageable pageable);
+	VideoDto getVideoById(String id) throws ResourceNotFoundException, Exception;
 
 	// U - Update
-	Video updateVideo(Video video);
+	VideoDto updateVideo(String id, VideoDto video) throws ResourceNotFoundException, Exception;
 
 	// D - Delete
-	boolean deleteVideoById(String id);
-	boolean deleteVideo(Video video);
+	void deleteVideoById(String id) throws ResourceNotFoundException, Exception;
+
 }

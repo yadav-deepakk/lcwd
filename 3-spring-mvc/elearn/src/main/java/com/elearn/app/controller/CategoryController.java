@@ -47,7 +47,7 @@ public class CategoryController {
 			@RequestParam(name = "page", defaultValue = AppConstants.CATEGORY_DEFAULT_PAGE_NO) int pageNumber,
 			@RequestParam(name = "size", defaultValue = AppConstants.CATEGORY_DEFAULT_PAGE_SIZE) int pageSize,
 			@RequestParam(name = "sort", defaultValue = AppConstants.CATEGORY_DEFAULT_SORT_BY) String sortBy,
-			@RequestParam(name = "dir", defaultValue = AppConstants.CATEGORY_DEFAULT_SORT_BY) String sortDirection) {
+			@RequestParam(name = "dir", defaultValue = AppConstants.CATEGORY_DEFAULT_SORT_DIR) String sortDirection) {
 		PageResponse<CategoryDto> categoryDtoList = categoryService.getCategoryList(pageNumber, pageSize, sortBy, sortDirection);
 		return ResponseEntity.ok(categoryDtoList);
 	}
