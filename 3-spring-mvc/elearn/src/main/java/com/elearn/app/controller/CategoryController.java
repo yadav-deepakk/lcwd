@@ -33,11 +33,11 @@ public class CategoryController {
 
 	@PostMapping
 	public ResponseEntity<?> saveCategory(@RequestBody @Valid CategoryDto categoryDto) {
-		
+
 //		if(bindingResult.hasErrors()) {
 //			return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult.getAllErrors());
 //		}
-		
+
 		CategoryDto savedCategoryDto = categoryService.saveCategory(categoryDto);
 		return ResponseEntity.ok(savedCategoryDto);
 	}
@@ -48,7 +48,8 @@ public class CategoryController {
 			@RequestParam(name = "size", defaultValue = AppConstants.CATEGORY_DEFAULT_PAGE_SIZE) int pageSize,
 			@RequestParam(name = "sort", defaultValue = AppConstants.CATEGORY_DEFAULT_SORT_BY) String sortBy,
 			@RequestParam(name = "dir", defaultValue = AppConstants.CATEGORY_DEFAULT_SORT_DIR) String sortDirection) {
-		PageResponse<CategoryDto> categoryDtoList = categoryService.getCategoryList(pageNumber, pageSize, sortBy, sortDirection);
+		PageResponse<CategoryDto> categoryDtoList = categoryService.getCategoryList(pageNumber, pageSize, sortBy,
+				sortDirection);
 		return ResponseEntity.ok(categoryDtoList);
 	}
 
@@ -71,6 +72,15 @@ public class CategoryController {
 		categoryService.deleteCategoryById(categoryId);
 		CustomMessage message = CustomMessage.builder().message("Category deleted!")
 				.details("Category with id " + categoryId + " has been deleted successfully!").success(true).build();
+		return ResponseEntity.ok(message);
+	}
+
+	@GetMapping("/{categoryId}/courses/{courseId}")
+	public ResponseEntity<CustomMessage> addCourseToCategory(@PathVariable String categoryId,
+			@PathVariable String courseId) throws ResourceNotFoundException, Exception {
+		categoryService.addCourseToCategory(categoryId, courseId);
+		CustomMessage message = CustomMessage.builder().message("Course has been added to Category!").details("")
+				.success(true).build();
 		return ResponseEntity.ok(message);
 	}
 

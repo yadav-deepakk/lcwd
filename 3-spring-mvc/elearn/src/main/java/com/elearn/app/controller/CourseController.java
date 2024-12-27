@@ -53,8 +53,8 @@ public class CourseController {
 			@RequestParam(name = "sort", defaultValue = AppConstants.COURSE_DEFAULT_SORT_BY) String sortBy,
 			@RequestParam(name = "dir", defaultValue = AppConstants.COURSE_DEFAULT_SORT_DIR) String sortDirection)
 			throws ResourceNotFoundException, Exception {
-		Sort sort = sortDirection.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending(); 
-		PageRequest pageRequest = PageRequest.of(pageNumber, pageSize, sort); 
+		Sort sort = sortDirection.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+		PageRequest pageRequest = PageRequest.of(pageNumber, pageSize, sort);
 		return ResponseEntity.ok(courseService.getSearchedCourses(keyword, pageRequest));
 	}
 
@@ -62,6 +62,15 @@ public class CourseController {
 	public ResponseEntity<CourseDto> getCourseById(@PathVariable("id") String courseId)
 			throws ResourceNotFoundException, Exception {
 		return ResponseEntity.ok(courseService.getCourseById(courseId));
+	}
+
+	@GetMapping("/{courseId}/categories/{categoryId}/")
+	public ResponseEntity<CustomMessage> addCategoryToCourse(@PathVariable String courseId,
+			@PathVariable String categoryId) throws ResourceNotFoundException, Exception {
+		courseService.addCategoryToCourse(courseId, categoryId);
+		CustomMessage message = CustomMessage.builder().message("category has been added to course!")
+				.details("").success(true).build();
+		return ResponseEntity.ok(message);
 	}
 
 	@PutMapping("/{id}")

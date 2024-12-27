@@ -1,6 +1,9 @@
 package com.elearn.app.dto;
 
 import java.util.Date;
+import java.util.Set;
+
+import com.elearn.app.entities.Course;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -14,6 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class CategoryDto {
+
 	private String id;
 
 	@NotEmpty(message = "Title can not be empty")
@@ -24,5 +28,7 @@ public class CategoryDto {
 	@Size(min = 2, max = 1000, message = "Description must be between 2 to 100 characters.")
 	private String descr;
 	private Date createdAt;
+
+	private Set<Course> courseSet;
 
 }

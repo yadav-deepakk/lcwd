@@ -2,6 +2,7 @@ package com.elearn.app.service.impl;
 
 import com.elearn.app.dto.CourseDto;
 import com.elearn.app.dto.PageResponse;
+import com.elearn.app.entities.Category;
 import com.elearn.app.entities.Course;
 
 import java.util.Date;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.elearn.app.exception.ResourceNotFoundException;
+import com.elearn.app.repository.CategoryRepo;
 import com.elearn.app.repository.CourseRepo;
 import com.elearn.app.service.CourseService;
 
@@ -23,10 +25,12 @@ public class CourseServiceImpl implements CourseService {
 
 	private final ModelMapper modelMapper;
 	private final CourseRepo courseRepo;
+	private final CategoryRepo categoryRepo;
 
-	public CourseServiceImpl(ModelMapper modelMapper, CourseRepo courseRepo) {
+	public CourseServiceImpl(ModelMapper modelMapper, CourseRepo courseRepo, CategoryRepo categoryRepo) {
 		this.modelMapper = modelMapper;
 		this.courseRepo = courseRepo;
+		this.categoryRepo = categoryRepo; 
 	}
 
 	@Override
@@ -94,6 +98,14 @@ public class CourseServiceImpl implements CourseService {
 		Course course = courseRepo.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("No Such Course Found to delete!"));
 		courseRepo.delete(course);
+	}
+
+	@Override
+	public void addCategoryToCourse(String courseId, String categoryId) throws ResourceNotFoundException, Exception {
+		Course course = courseRepo.findById(courseId)
+				.orElseThrow(() -> new ResourceNotFoundException("No such course found!"));
+		Category category = categoryRepo.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("No Such Course Found to delete!")); 
+		course.addCategory(category);
 	}
 
 }

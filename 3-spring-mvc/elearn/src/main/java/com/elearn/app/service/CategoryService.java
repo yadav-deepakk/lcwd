@@ -7,6 +7,7 @@ import com.elearn.app.exception.ResourceNotFoundException;
 public interface CategoryService {
 	// C - Create
 	CategoryDto saveCategory(CategoryDto categoryDto);
+	void addCourseToCategory(String categoryId, String courseId) throws ResourceNotFoundException, Exception;
 
 	// R - Read
 	PageResponse<CategoryDto> getCategoryList(int page, int size, String sortBy, String dir);

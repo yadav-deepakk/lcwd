@@ -30,11 +30,21 @@ public class Category {
 	private String id;
 	private String title;
 	private String descr;
-	private Date createdAt; 
-	
+	private Date createdAt;
+
 	@ManyToMany
 	@Builder.Default
 	@JoinTable(name = "category_course_map", joinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"))
 	private Set<Course> courseSet = new LinkedHashSet<>();
+
+	public void addCourses(Course course) {
+		this.courseSet.add(course); // add course in this category.
+		course.getCategorySet().add(this); // add this category to the course passed into the function.
+	}
+
+	public void removeCourse(Course course) {
+		this.courseSet.remove(course);
+		course.getCategorySet().remove(this);
+	}
 
 }

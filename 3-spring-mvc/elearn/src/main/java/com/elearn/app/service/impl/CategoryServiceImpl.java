@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 import com.elearn.app.dto.CategoryDto;
 import com.elearn.app.dto.PageResponse;
 import com.elearn.app.entities.Category;
+import com.elearn.app.entities.Course;
 import com.elearn.app.exception.ResourceNotFoundException;
 import com.elearn.app.repository.CategoryRepo;
+import com.elearn.app.repository.CourseRepo;
 import com.elearn.app.service.CategoryService;
 
 @Service
@@ -21,10 +23,12 @@ public class CategoryServiceImpl implements CategoryService {
 
 	private final ModelMapper modelMapper;
 	private final CategoryRepo categoryRepo;
+	private final CourseRepo courseRepo;
 
-	public CategoryServiceImpl(ModelMapper modelMapper, CategoryRepo categoryRepo) {
+	public CategoryServiceImpl(ModelMapper modelMapper, CategoryRepo categoryRepo, CourseRepo courseRepo) {
 		this.modelMapper = modelMapper;
 		this.categoryRepo = categoryRepo;
+		this.courseRepo = courseRepo;
 	}
 
 	@Override
@@ -71,6 +75,15 @@ public class CategoryServiceImpl implements CategoryService {
 		Category category = categoryRepo.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("No such category found to delete!"));
 		categoryRepo.delete(category);
+	}
+
+	@Override
+	public void addCourseToCategory(String categoryId, String courseId) throws ResourceNotFoundException, Exception {
+		Category category = categoryRepo.findById(categoryId)
+				.orElseThrow(() -> new ResourceNotFoundException("No such category found"));
+		Course course = courseRepo.findById(courseId)
+				.orElseThrow(() -> new ResourceNotFoundException("No such course found"));
+		category.addCourses(course);
 	}
 
 }

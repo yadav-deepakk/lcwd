@@ -45,4 +45,14 @@ public class Course {
 	@ManyToMany(mappedBy = "courseSet")
 	private Set<Category> categorySet = new LinkedHashSet<>();
 
+	public void addCategory(Category category) {
+		this.categorySet.add(category);
+		category.getCourseSet().add(this);
+	}
+
+	public void removeCategory(Category category) {
+		this.categorySet.remove(category);
+		category.getCourseSet().remove(this);
+	}
+
 }
