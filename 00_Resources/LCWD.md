@@ -1,15 +1,23 @@
-## Spring boot and Microservices
+## Spring boot
 
 ### Pre-requisites
 
 **Java Basics**
-- [ ] OOPs
-- [ ] Collections & Maps
-- [ ] Streams
-- [ ] Exception Handling
 - [ ] String Handling
+- [ ] OOPs
+    - [ ] Encapsulation
+    - [ ] Abstraction
+    - [ ] Inheritance
+    - [ ] Polymorphism
+- [ ] Collections & Maps
+- [ ] Java useful features
+    - [ ] Streams
+    - [ ] Lambda Expression
+    - [ ] Time APIs
+    - [ ] Records, Sealed, Pattern matching
+    - [ ] Virtual Threads
+- [ ] Exception Handling
 - [ ] Multi-threading and Concurrency
-
 
 ### Introduction to Spring Boot
 - [ ] Introduction to Spring Boot
@@ -44,7 +52,7 @@
     - [ ] Entity Lifecycle events
 
 ### Spring MVC (API Building)
-- Project - `Todo Applicatioin APIs`
+- Project - `Todo Application APIs`
 - [ ] Spring MVC Architecture
 - [ ] Dispatcher servlet
 - [ ] Controllers, RestController
@@ -56,9 +64,13 @@
 - [ ] Exception Handling
     - [ ] Controller level
     - [ ] Global level
-    - [ ] Returning custom error response
+    - [ ] Returning Custom Error Response
 - [ ] Interceptors
 - [ ] File Upload
+
+### REST API Clients
+- [ ] RestClient - Synchronous, Blocking
+- [ ] WebClient - Reactive, Non-Blocking
 
 ### Spring Security
 - [ ] Authenctication and Authorization
@@ -69,4 +81,25 @@
 - [ ] Managing users
 - [ ] OAuth using Keycloak
 
+### Microservices
+- [ ] Introduction to Microservices
+- [ ] Benefits and Challeges of Microservice Architecture
+- [ ] Understanding Spring Cloud Project
+    - [ ] API Gateway - Routing and Filtering, Zuul
+    - [ ] Eureka - Service Discovery and Registry, Load Balancing with Eureka
+- [ ] Interservice Communication
+    - [ ] RestTemplate
+    - [ ] RestClient
+    - [ ] WebClient
+    - [ ] FeignClient
+- [ ] Config Servers
+- [ ] Resilience4j - Fault tolerance
+- [ ] Spring Boot Actuator/ Zipkin
+- [ ] Messages and event driven architecture - RabbitMQ/Kafka
+- [ ] Securing Microservices - OAuth
 
+
+### Deployment and Containerization
+- [ ] Creating docker images and containers
+- [ ] Docker Compose
+- [ ] Docker Hub

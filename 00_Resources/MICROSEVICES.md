@@ -7,7 +7,7 @@
 - [ ] Streams
 - [ ] Lambda
 - [ ] Multithreading and concurrency
-- [ ] Records, Sealed, Pattern mactching
+- [ ] Records, Sealed, Pattern matching
 - [ ] Virtual Threads
 - [ ] Java 21, 25 (LTS)
 
