@@ -1,5 +1,6 @@
 ## Roadmaps
 
-[LCWD](./00_RoadMaps/LCWD.md)
+[LCWD](./00_Resources/LCWD.md)
 
-[MICROSERVICES](./00_RoadMaps/MICROSEVICES.md)
+[MICROSERVICES](./00_Resources/MICROSEVICES.md)
+
