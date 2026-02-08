@@ -1,11 +1,11 @@
 /*
- * ---------------------
- *  Exception Handling
- * ---------------------
+ * --------------------------------------------------
+ *            Exception Handling
+ * --------------------------------------------------
  *  Any unexpected or unwanted event that occurs during the program execution is
  *  known as exception and in java there are two kind of exceptions checked and
  *  unchecked exceptions
- * ---------------------
+ * --------------------------------------------------
  */
 
 public class Main {
@@ -32,10 +32,21 @@ public class Main {
 
   }
 
+  public static void checkValidAge(int age) {
+
+    if (age <= 0) {
+      throw new IllegalArgumentException("Age is invalid");
+    }
+
+  }
+
   public static void main(String[] args) {
+
     System.out.println("----- Exception handling -----");
     exceptionHandling();
+    checkValidAge(-12);
     System.out.println("------------------------------");
+
   }
 
 }
