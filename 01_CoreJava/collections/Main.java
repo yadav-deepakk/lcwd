@@ -15,8 +15,11 @@
  * */
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
@@ -55,13 +58,50 @@ public class Main {
     System.out.println("poll: " + poll);
     System.out.println("queue: " + queue);
 
-    Set<Integer> set1 = new HashSet<>();
-    set1.add(23);
-    set1.add(94);
-    set1.add(24);
-    set1.add(59);
-    set1.add(36);
-    System.out.println("set1: " + set1);
+    Set<Integer> set = new HashSet<>();
+    set.add(23);
+    set.add(94);
+    set.add(24);
+    set.add(59);
+    set.add(36);
+    System.out.println("set1: " + set);
+
+    // traversing through iterator, listIterator, foreach, forEach streams
+    // iterator
+    Iterator<Integer> iterator = list.iterator();
+    while (iterator.hasNext()) {
+      System.out.print(iterator.next() + " ");
+    }
+    System.out.println();
+
+    // listIterator
+    ListIterator<Integer> listIterator = list.listIterator(list.size());
+    while (listIterator.hasPrevious()) {
+      System.out.print(listIterator.previous() + " ");
+    }
+    System.out.println();
+
+    // foreach loop
+    for (int num : set) {
+      System.out.print(num + " ");
+    }
+    System.out.println();
+
+    // forEach(element -> { //code })
+    list.forEach(num -> System.out.print(num + " "));
+
+    // comparable and comparators in java
+    List<StudentClass> studentList = new ArrayList<>();
+    studentList.add(new StudentClass("John", "Smith", "john@email.com", 22.7f));
+    studentList.add(new StudentClass("Cameron", "White", "cameronwhite@email.com", 52.1f));
+    studentList.add(new StudentClass("james", "anderson", "anderson@email.com", 42.2f));
+    studentList.add(new StudentClass("Ali", "Mohammed", "mohammed@email.com", 32.6f));
+    studentList.add(new StudentClass("Alisa", "Janardan", "alisa@email.com", 32.6f));
+
+    System.out.println();
+    System.out.println("student list before sorting: " + studentList);
+    Collections.sort(studentList);
+    System.out.println("student list after sorting: " + studentList);
 
   }
 
