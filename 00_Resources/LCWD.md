@@ -4,19 +4,19 @@
 
 **Java Basics**
 - [ ] String Handling
-- [ ] OOPs
-    - [ ] Encapsulation
-    - [ ] Abstraction
-    - [ ] Inheritance
-    - [ ] Polymorphism
-- [ ] Collections & Maps
+- [X] OOPs
+    - [X] Encapsulation
+    - [X] Abstraction
+    - [X] Inheritance
+    - [X] Polymorphism
+- [X] Collections & Maps
 - [ ] Java useful features
     - [ ] Streams
     - [ ] Lambda Expression
     - [ ] Time APIs
     - [ ] Records, Sealed, Pattern matching
     - [ ] Virtual Threads
-- [ ] Exception Handling
+- [X] Exception Handling
 - [ ] Multi-threading and Concurrency
 
 ### Introduction to Spring Boot
