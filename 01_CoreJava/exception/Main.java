@@ -1,3 +1,4 @@
+
 /*
  * --------------------------------------------------
  *            Exception Handling
@@ -6,6 +7,7 @@
  *  known as exception and in java there are two kind of exceptions checked and
  *  unchecked exceptions
  * --------------------------------------------------
+ *
  */
 
 public class Main {
@@ -32,7 +34,7 @@ public class Main {
 
   }
 
-  public static void checkValidAge(int age) {
+  public static void checkValidAge(int age) throws IllegalArgumentException, Exception {
 
     if (age <= 0) {
       throw new IllegalArgumentException("Age is invalid");
@@ -40,7 +42,7 @@ public class Main {
 
   }
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IllegalArgumentException, Exception {
 
     System.out.println("----- Exception handling -----");
     exceptionHandling();
