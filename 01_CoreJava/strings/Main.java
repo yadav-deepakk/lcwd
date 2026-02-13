@@ -2,15 +2,17 @@
 /* -------------------------------------
  *  String are of two types in java
  * -------------------------------------
+ *  Multable string - StringBuilder and stringBuffer
+ *  |---------------------|------------------------|
+ *  |   StringBuilder     |  StringBuffer          |
+ *  |---------------------|------------------------|
+ *  |   No thread safety  |  ensures thread saftey |
+ *  |   faster            |  slower                |
+ *  |   single thread     |  multi-threaded        |
+ *  |---------------------|------------------------|
  *
- * (I) Mutable String
- *    (i) StringBuffer -
- *    (ii) StringBuilder -
- *
- *
- * (II) Immutable String
- *   eg.  String str1 = new String("This is a string1");
- *        String str2 = "This is a string2";
+ *  Mutable Strings -
+ *  String: String class
  *
  **/
 
@@ -18,10 +20,20 @@ public class Main {
 
   public static void mutableStrings() {
     // string buffer
-    StringBuffer strbuffer = new StringBuffer();
+    StringBuffer strbuffer = new StringBuffer(); // can pass the size if you want
+    strbuffer.append("append");
+    strbuffer.append("append");
+    strbuffer.deleteCharAt(3);
+    System.out.println("stringbuffer after manipulatioin: " + strbuffer);
 
     // string builder
     StringBuilder strbuilder = new StringBuilder();
+    strbuilder.append("stringbuilder");
+    strbuilder.insert(3, "builder");
+    strbuilder.append("stringbuilder");
+    strbuilder.delete(2, 6);
+    System.out.println("StringBuilder: " + strbuilder);
+
   }
 
   public static void stringMethods() {
@@ -88,7 +100,8 @@ public class Main {
 
   public static void main(String[] args) {
 
-    stringMethods();
+    // stringMethods();
+    mutableStrings();
 
   }
 }
