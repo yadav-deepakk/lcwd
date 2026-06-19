@@ -9,42 +9,60 @@ const AddStudent = () => {
   const [email, setEmail] = useState(""); 
   const [username, setUsername] = useState(""); 
 
-  const [student, setStudent] = useState<Student| null>(null); 
   const [savedStudent, setSavedStudent] = useState<Student| null>(null); 
 
   const handleAddStudent = (event:React.FormEvent<HTMLFormElement>) => {
     event.preventDefault(); 
     console.log("Trying to add new student.")
 
-    if(validateStudent()) return; // validation fails
-    // createStudent(); 
+    if(!validateStudent()) return; // validation fails
+    createStudent(); 
 
     console.log("added a new student.")
   }
 
   const handleReset= () => {
 
+    setEmail("")
+    setName("")
+    setUsername("")
+
   }
 
   const validateStudent = () => {
+    let errorMessage = ""; 
+    if(!name || name.length <3 || name.length>12){
+      errorMessage = errorMessage + " " + "name is invalid \n"; 
+    } // name validation failed
 
-    if(!name) // name
-    if(!email) // email
-    if(!username) // username
+    if(!email || !(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))){
+      errorMessage =  errorMessage + " " + "email is invalid \n"; 
+    } // email validation failed
 
-    return true
+    if(!username || username.length <3 || username.length>12 ){
+      errorMessage = errorMessage + " " + "username is invalid \n"; 
+    } // username validation failed
+
+    if(errorMessage) {
+      alert(errorMessage); 
+      return false; 
+    }
+    
+    return true // validation passed
   }
 
   const createStudent = () => {
 
+    let newStudent = {
+      name,
+      email, 
+      username, 
+    }
+
     fetch(`${BASE_URL_STUDENT_V1}`, {
       method: "POST", 
       headers: { "Content-Type": "application/json", }, 
-      body: JSON.stringify({
-        name: "testing purpose", 
-        email: "test@email.com", 
-        username: "testUser", 
-      })
+      body: JSON.stringify(newStudent)
     })
     .then(response => response.json())
     .then(savedData => setSavedStudent(savedData))
@@ -77,16 +95,16 @@ const AddStudent = () => {
         placeholder="Enter your name" />  
       <br />
 
-      <button type="reset">Reset</button>
+      <button type="reset" onClick={handleReset}>Reset</button>
       <button type="submit">Submit</button>
     </form>
 
     {savedStudent && (
         <div>
-          <h3>Student Saved Successfully</h3>
-          <p>Name: {savedStudent.name}</p>
-          <p>Email: {savedStudent.email}</p>
-          <p>Username: {savedStudent.username}</p>
+          <h4>Student Saved Successfully</h4><br />
+          <span>Name: {savedStudent.name}</span> <br />
+          <span>Email: {savedStudent.email}</span><br />
+          <span>Username: {savedStudent.username}</span>
         </div>
     )}
   </>
