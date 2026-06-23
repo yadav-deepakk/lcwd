@@ -91,9 +91,13 @@ public class ServiceCLI {
 	}
 
 	public void searchProduct(Scanner scan) {
+		
+		// consume leftover newline character \n
+		scan.nextLine();
+		
 		System.out.println("Enter keyword: ");
 		String keyword = scan.nextLine();
-		List<Product> productList = dao.getProductList();
+		List<Product> productList = dao.search(keyword);
 		productList.stream().forEach(System.out::println);
 
 	}

@@ -110,13 +110,13 @@ public class ProductDaoImpl implements ProductDao {
 		try {
 
 			String query = """
-					select * from product where lower(title) like(?) or lower(description) like lower(?)
+					select * from product where lower(title) like lower(?) or lower(description) like lower(?)
 					""";
 			String pattern = "%" + keyword + "%";
-			template.query(query, productRowMapper, pattern, pattern);
+			return template.query(query, productRowMapper, pattern, pattern);
 
 		} catch (Exception ex) {
-			System.out.println("error in inserting in the product table.");
+			System.out.println("error in seraching for " + keyword);
 			System.out.println(ex);
 		}
 		return null;
