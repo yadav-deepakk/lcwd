@@ -21,8 +21,7 @@ public interface ProductRepo extends JpaRepository<Product, String> {
 	@Query("""
 			select p 
 			from Product p 
-			where lower(concat(p.name, ' ', p.description)) 
-			like(concat('%', :keyword, '%'))
+			where lower(concat(p.name, ' ', p.description)) like(concat('%', :keyword, '%'))
 			""")
 	List<Product> searchByTheKeyword(@Param("keyword") String keyword); 
 
