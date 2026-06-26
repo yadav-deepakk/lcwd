@@ -1,6 +1,6 @@
 package com.example.demo.entities;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,6 +24,6 @@ public class Student {
 	private String name;
 	private String email;
 	private String username;
-	private Date dateOfBirth;
+	private LocalDate dob; 
 	
 }

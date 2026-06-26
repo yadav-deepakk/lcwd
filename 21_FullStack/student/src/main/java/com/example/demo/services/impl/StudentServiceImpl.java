@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.dtos.StudentDto;
 import com.example.demo.entities.Student;
+import com.example.demo.exceptions.ResourceNotFoundException;
 import com.example.demo.repo.StudentRepo;
 import com.example.demo.services.interfaces.StudentService;
 
@@ -46,8 +47,10 @@ public class StudentServiceImpl implements StudentService {
 	public StudentDto getStudent(Long id) {
 		log.info("StudentServiceImpl || getStudent | Student id: {}", id);
 
-		Optional<Student> student = studentRepo.findById(id);
-		return modelMapper.map(student.get(), StudentDto.class);
+		Student student = studentRepo.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("No such student exists in database!"));
+		
+		return modelMapper.map(student, StudentDto.class);
 	}
 
 	@Override
@@ -58,30 +61,32 @@ public class StudentServiceImpl implements StudentService {
 
 		if (student.isEmpty()) {
 			log.info("StudentServiceImpl || No record found with id: {}", id);
+			return null;
+
 		} else {
 
 			Student st = student.get();
 
 			st.setUsername(dto.getUsername());
 			st.setEmail(dto.getEmail());
-			st.setDateOfBirth(dto.getDob());
+			st.setDob(dto.getDob());
 			st.setName(dto.getName());
 
 			Student savedStudent = studentRepo.save(st);
 
 			log.info("StudentServiceImpl || returning saved record...");
 			return modelMapper.map(savedStudent, StudentDto.class);
+
 		}
 
-		return null;
 	}
 
 	@Override
 	public boolean deleteStudentById(Long studentId) {
-		log.info("StudentServiceImpl || delete student id : {}", studentId);
-
+		log.info("StudentServiceImpl || delete student id: {}", studentId);
 		studentRepo.deleteById(studentId);
 		return studentRepo.existsById(studentId);
+
 	}
 
 }

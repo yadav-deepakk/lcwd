@@ -1,8 +1,6 @@
 package com.example.demo.dtos;
 
-import java.util.Date;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDate;
 
 import lombok.Data;
 
@@ -13,7 +11,6 @@ public class StudentDto {
 	private String name;
 	private String email;
 	private String username;
-	@JsonFormat(pattern = "yyyy-MM-dd")
-	private Date dob; 
+	private LocalDate dob; 
 
 }
