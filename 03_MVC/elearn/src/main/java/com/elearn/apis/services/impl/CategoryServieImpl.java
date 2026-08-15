@@ -8,9 +8,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.elearn.apis.dtos.CategoryDto;
+import com.elearn.apis.dtos.CourseDto;
 import com.elearn.apis.entities.Category;
+import com.elearn.apis.entities.Course;
 import com.elearn.apis.exceptions.ResourceNotFoundException;
 import com.elearn.apis.repo.CategoryRepo;
+import com.elearn.apis.repo.CourseRepo;
 import com.elearn.apis.services.interfaces.CategoryService;
 
 import lombok.AllArgsConstructor;
@@ -23,6 +26,7 @@ public class CategoryServieImpl implements CategoryService {
 
 	private final ModelMapper modelMapper;
 	private final CategoryRepo categoryRepo;
+	private final CourseRepo courseRepo;
 
 	@Override
 	public CategoryDto save(CategoryDto dto) {
@@ -78,7 +82,25 @@ public class CategoryServieImpl implements CategoryService {
 	public void deleteById(UUID uuid) {
 		log.info("CategoryServieImpl | delete | uuid: {}", uuid);
 		categoryRepo.deleteById(uuid);
+	}
 
+	@Override
+	public void saveCourse(UUID categoryId, UUID courseId) {
+		Category category = categoryRepo.findById(categoryId)
+				.orElseThrow(() -> new ResourceNotFoundException("No category found with id: " + categoryId));
+		
+		Course course = courseRepo.findById(courseId)
+				.orElseThrow(() -> new ResourceNotFoundException("No course found with id: " + courseId));
+		
+		category.addCourse(course);
+		
+		categoryRepo.save(category); 
+		
+	}
+
+	@Override
+	public Page<CourseDto> getCoursesOfCategory(UUID uuid, Pageable pageRequest) {
+		return null;
 	}
 
 }

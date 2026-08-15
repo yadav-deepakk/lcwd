@@ -1,11 +1,15 @@
 package com.elearn.apis.dtos;
 
+import java.util.UUID;
+
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.Data;
 
 @Data
 public class CategoryDto {
+	
+	private UUID uuid;
 	
 	@Min(3)
 	@Max(200)

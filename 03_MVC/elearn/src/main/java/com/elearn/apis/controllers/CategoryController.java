@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.elearn.apis.dtos.CategoryDto;
+import com.elearn.apis.dtos.CourseDto;
 import com.elearn.apis.services.interfaces.CategoryService;
 
 import lombok.AllArgsConstructor;
@@ -71,14 +72,16 @@ public class CategoryController {
 	}
 
 	@PostMapping("/{categoryId}/courses/{courseId}")
+	@ResponseStatus(HttpStatus.CREATED)
 	public void addCourseToCategory(@PathVariable UUID categoryId, @PathVariable UUID courseId) {
 		log.info("CategoryController | POST | categoryId: {} and courseId: {}", categoryId, courseId);
+		categoryService.saveCourse(categoryId, courseId); 
 	}
 
 	@GetMapping("/{categoryId}/courses")
-	public void getAllCoursesOfCategory(@PathVariable UUID categoryId) {
+	public Page<CourseDto> getAllCoursesOfCategory(@PathVariable UUID categoryId, Pageable pageable) {
 		log.info("CategoryController | GET | categoryId: {}", categoryId);
-
+		return categoryService.getCoursesOfCategory(categoryId, pageable);
 	}
 
 }

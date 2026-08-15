@@ -11,7 +11,7 @@
  *  |   single thread     |  multi-threaded        |
  *  |---------------------|------------------------|
  *
- *  Mutable Strings -
+ *  Imutable Strings -
  *  String: String class
  *
  **/

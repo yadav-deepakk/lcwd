@@ -1,10 +1,12 @@
 package com.elearn.apis.entities;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
 import org.hibernate.annotations.UuidGenerator;
+import org.springframework.data.annotation.CreatedDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,8 +36,21 @@ public class Category {
 	@Column(length = 500)
 	private String description;
 	
+	@CreatedDate
+	private LocalDateTime createdate; 
+	
 	@ManyToMany
 	@Builder.Default
 	Set<Course> courseSet = new HashSet<>(); 
+	
+	public void addCourse(Course course) {
+		this.courseSet.add(course); 
+		course.getCategorySet().add(this); 
+	}
+	
+	public void removeCourse(Course course) {
+		this.courseSet.remove(course); 
+		course.getCategorySet().remove(this); 
+	}
 
 }

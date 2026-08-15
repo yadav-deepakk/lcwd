@@ -15,23 +15,21 @@ import java.util.Set;
 @Builder
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    private String fullName;
+	private String fName;
+	private String lName;
+	private String mName;
 
-    @Column(unique = true, nullable = false)
-    private String email;
+	@Column(unique = true, nullable = false)
+	private String email;
 
-    private String password;
+	private String password;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_courses",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "course_id")
-    )
-    @Builder.Default
-    private Set<Course> purchasedCourses = new HashSet<>();
+	@ManyToMany
+	@JoinTable(name = "user_courses", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
+	@Builder.Default
+	private Set<Course> purchasedCourses = new HashSet<>();
 }

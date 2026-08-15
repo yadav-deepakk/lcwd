@@ -1,8 +1,13 @@
 package com.elearn.apis.entities;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,23 +29,43 @@ import lombok.Setter;
 @Builder
 public class Course {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private UUID id;
 
-  private String title;
+	private String title;
 
-  @Column(length = 3000)
-  private String description;
+	@Column(length = 500)
+	private String shortDescription;
 
-  private BigDecimal price;
+	@Column(length = 3000)
+	private String longDescription;
 
-  @ManyToMany(mappedBy = "purchasedCourses")
-  @Builder.Default
-  private Set<User> users = new HashSet<>();
+	private BigDecimal price;
 
-  @ManyToMany(mappedBy = "courseSet")
-  @Builder.Default
-  private Set<Category> categorySet = new HashSet<>();
+	private String banner;
+
+	private boolean live;
+
+	@CreationTimestamp
+	private LocalDateTime createdAt;
+
+	@UpdateTimestamp
+	private LocalDateTime updatedAt;
+
+	@ManyToMany(mappedBy = "courseSet")
+	@Builder.Default
+	private Set<Category> categorySet = new HashSet<>();
+
+	public void addCategory(Category category) {
+		this.categorySet.add(category);
+		category.getCourseSet().add(this);
+	}
+
+	public void removeCategory(Category category) {
+		this.categorySet.remove(category);
+		
+		category.getCourseSet().remove(this);
+	}
 
 }
