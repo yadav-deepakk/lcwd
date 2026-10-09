@@ -1,0 +1,1 @@
+export const BASE_URL_STUDENT_V1 = "http://localhost:9091/api/v1/students"
